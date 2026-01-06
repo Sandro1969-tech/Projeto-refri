@@ -1,0 +1,160 @@
+/* Configurações Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden; /* Evita barras de rolagem indesejadas */
+}
+
+main {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background-color: #222; /* Cor de fundo caso o item demore a carregar */
+}
+
+/* Container de cada slide */
+.item {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    background-color: var(--background);
+    transition: background-color 0.5s ease;
+}
+
+/* Quando o item está ativo */
+.item.active {
+    display: block;
+}
+
+/* Título de Fundo (Efeito de profundidade) */
+.item .title {
+    font-size: clamp(5rem, 15vw, 12rem); /* Tamanho adaptável */
+    color: white;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    z-index: 1;
+    opacity: 0.3; /* Deixa o texto suave atrás do refri */
+}
+
+/* Imagem da Fruta */
+.item .fruit {
+    width: 100%;
+    max-width: 600px; /* Limita o tamanho no Desktop */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    pointer-events: none; /* Evita que a imagem atrapalhe cliques */
+}
+
+/* Imagem do Refrigerante */
+.item .refri {
+    width: 100%;
+    max-width: 450px; /* Limita o tamanho no Desktop */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+/* Botões de Navegação */
+#prev, #next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    background-color: rgba(238, 238, 238, 0.2);
+    border: 2px solid rgba(238, 238, 238, 0.4);
+    color: #fff;
+    font-size: 2rem;
+    font-family: monospace;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#prev:hover, #next:hover {
+    background-color: #eee;
+    color: #000;
+}
+
+#prev { left: 30px; }
+#next { right: 30px; }
+
+/* Animações de entrada */
+@keyframes toActive {
+    from {
+        top: 100%;
+        opacity: 0;
+        filter: blur(20px);
+    }
+    to {
+        top: 50%;
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+@keyframes titleActive {
+    from {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+}
+
+/* Aplicando animações nos itens ativos */
+.item.active .fruit {
+    animation: toActive 0.7s ease-in-out forwards;
+}
+
+.item.active .refri {
+    animation: toActive 0.5s ease-in-out forwards;
+}
+
+.item.active .title {
+    animation: titleActive 0.8s ease-in-out forwards;
+}
+
+/* Ajustes para Celular (Responsividade) */
+@media screen and (max-width: 768px) {
+    .item .fruit {
+        max-width: 90%;
+    }
+    .item .refri {
+        max-width: 280px;
+    }
+    #prev, #next {
+        width: 45px;
+        height: 45px;
+        bottom: 50px; /* Move os botões para baixo no celular se preferir */
+        top: auto;
+    }
+    #prev { left: 20px; }
+    #next { right: 20px; }
+}

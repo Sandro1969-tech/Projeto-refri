@@ -1,0 +1,7 @@
+.item {
+    display: none;
+    wid
+}
+.item.active {
+    display: block;
+}

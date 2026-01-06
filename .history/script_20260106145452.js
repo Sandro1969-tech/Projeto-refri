@@ -1,0 +1,1 @@
+console.logDeu bom rapaz
